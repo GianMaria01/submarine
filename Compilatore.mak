@@ -4,7 +4,7 @@ CXXFLAGS = -Wall -std=c++17 -g -O0 -I$(RAYLIB_PATH)/include
 LDFLAGS = -L$(RAYLIB_PATH)/lib -lraylib -lopengl32 -lgdi32 -lwinmm
 
 TARGET = gioco.exe
-SRC = Main.cpp
+SRC = Main.cpp GamePlay.cpp
 
 all: $(TARGET)
 

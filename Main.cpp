@@ -1,28 +1,42 @@
 #include <iostream>
 #include "raylib.h"
+#include"Funzioni.hpp"
+
+// TODO: Verificare l'eccesivo utilizzo di CPU
 
 int main(){
 
-    InitWindow(800, 600, "random dot?");
-    Rectangle griglia = {50, 50, 550, 550};
+    const int wDisplay = 800, hDisplay = 600;
 
-    SetTargetFPS(60);
+    Rectangle griglia = {50, 50, 550, 550};
+    int gamephase = 0;
+    
+    InitWindow(wDisplay, hDisplay, "submarine");
+    // SetTargetFPS(60);
     while (!WindowShouldClose())
     {
         BeginDrawing();
         ClearBackground(RAYWHITE);
 
-            //---DISEGNO GRIGLIA---
-            for(int x=0; x<=(50*11);x+=50){
-                DrawLine(x,50,x,(50*11),BLACK);
-            }
-            for(int y=0; y<=(50*11);y+=50){
-                DrawLine(50,y,(50*11),y,BLACK);
+        if(gamephase==0){
+
+            const Rectangle BottoneStart = {300,300,200,75};
+
+            DrawRectangle(0,0,wDisplay,hDisplay,SKYBLUE);
+            DrawText("welcome to submarine",133,100,50,BLACK);
+
+            // Bottone start
+            DrawRectangleRec(BottoneStart,GRAY);
+            DrawText("start",338,318,50,BLACK);
+
+            // Interazione BottoneStart
+            if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT) || IsMouseButtonPressed(MOUSE_BUTTON_RIGHT)){
+                if(CheckCollisionPointRec(GetMousePosition(),BottoneStart)) gamephase = 1;
             }
 
-            if(CheckCollisionPointRec(GetMousePosition(),griglia) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON)){
-                std::cout<<"premuto";
-            }
+        }
+
+        if(gamephase == 1) gamephase = GamePlay();
         
         
         EndDrawing();
